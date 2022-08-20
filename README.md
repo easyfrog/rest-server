@@ -1,4 +1,4 @@
-## build & run width Dockerfile
+## RESTful server build & run width Dockerfile
 
 在`rest-server`根目录下创建`Dockerfile`文件
 
@@ -71,7 +71,7 @@ docker-compose down
 将本机上所有的images打包成一个.tar文件
 
 ```bash
-docker save $(docker images --format '{{.Repository}}:{{.Tag}}') -o allfilestoone.tar
+docker save $(docker images --format '{{.Repository}}:{{.Tag}}') -o allinone.tar
 ```
 
 将生成的`allinone.tar`拷贝到服务器上, 并进行加载
