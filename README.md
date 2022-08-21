@@ -115,3 +115,53 @@ volumes:
     data:
 ```
 
+### 在客户端引用 `dbfunc.min.js`
+
+在客户端, 使用这个库文件来访问 `api` 从客户端发送数据库操作代码并返回数据
+
+```js
+import * as db from './lib/dbfunc.min'
+
+// 设备数据度接口地址
+// dbfunc
+db.url = 'http://localhost:3000/api'
+
+// update
+db.query((db, prom) => {
+    db.collection('user').update({date: 1659968157204}, {$set: {
+        name: 'hahahah'
+    }}, (err, res) => {
+        prom.resolve(res)
+    })
+}).then(res => {
+    console.log(res)
+})
+
+// insert
+db.query([now], (db, prom) => {
+    db.collection('user')
+        .insertOne({
+            name: 'zqh',
+            age: 12,
+            date: param1
+        }, (err, res) => {
+            prom.resolve({})
+        })
+
+}).then(res => {
+    console.log(res)
+
+    // find
+    db.query((db, prom) => { 
+        db.collection('user')
+            .find({}, {projection: {_id: 0}})
+            .toArray((err, res) => {
+                prom.resolve(res)
+            })
+
+    }).then(_res => {
+        console.log('result: ', _res)
+    })
+
+})
+```
