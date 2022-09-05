@@ -9,7 +9,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3002
 
 # run npm start to start the server
 CMD npm start

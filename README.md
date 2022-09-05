@@ -22,7 +22,8 @@ CMD npm start
 
 ```bash
 # build
-docker build -t image-name .
+# 单独生成 rest-server image
+docker build -t rest-server_app .
 
 # run
 docker run -p -d 3000:3000 image-name
@@ -59,6 +60,9 @@ volumes:
 ```
 
 ```bash
+# 生成所有的images
+docker-compose build
+
 # start
 docker-compose up -d
 
@@ -164,4 +168,14 @@ db.query([now], (db, prom) => {
     })
 
 })
+```
+
+### Linux 常用命
+
+```base
+# 查看端口号
+lsof -i tcp:3000
+
+# 杀掉指定端口的进程
+kill -9 pid
 ```

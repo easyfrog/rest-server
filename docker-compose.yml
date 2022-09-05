@@ -6,7 +6,7 @@ services:
         build: .
         restart: always
         ports:
-            - '3000:3000'
+            - '3002:3002'
         volumes:
             - .:/usr/src/app
         depends_on:
