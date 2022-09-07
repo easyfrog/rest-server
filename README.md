@@ -14,7 +14,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3002
 
 # run npm start to start the server
 CMD npm start
@@ -42,7 +42,7 @@ services:
         build: .
         restart: always
         ports:
-            - '3000:3000'
+            - '3002:3002'
         volumes:
             - .:/usr/src/app
         depends_on:
@@ -178,4 +178,8 @@ lsof -i tcp:3000
 
 # 杀掉指定端口的进程
 kill -9 pid
+
+# centOS 启动 docker
+sudo systemctl start docker
+sudo systemctl stop docker
 ```

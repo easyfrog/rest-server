@@ -40,6 +40,7 @@ route.post('/api', async (req, res) => {
 
 //
 // "cloud remote function"
+// client method is func.run(async db => {})
 //
 route.post('/func', async (req, res) => {
 	await mongo.run_func(req, res)
@@ -47,8 +48,9 @@ route.post('/func', async (req, res) => {
 
 //
 // 处理文件上传
+// client method is func.upload(fileList)
 //
-route.post('/upload', upload.array('files', 20), (req, res) => {
+route.post('/upload', upload.array('files', 20), async (req, res) => {
 
 	console.log('uploaded files:', req.files);
 
@@ -64,16 +66,13 @@ route.post('/upload', upload.array('files', 20), (req, res) => {
 		})
 	})
 
-	// collection's name: files-upload
-	mongo.getCollection('filesUpload')().then(col => {
+	var col = await mongo.getCollection('filesUpload')()
 
-		// use bulkWrite insert many commands at one time
-		col.bulkWrite(actions, {ordered: false});
+	// use bulkWrite insert many commands at one time
+	col.bulkWrite(actions, {ordered: false});
 
-		// response
-		res.json(req.files)
-
-	})
+	// response
+	res.json(req.files)
 
 })
 

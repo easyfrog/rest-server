@@ -3,7 +3,6 @@
 // 通过使用 multer 处理文件上传
 //
 
-
 // use for path.extname
 var path = require('path')
 
@@ -28,6 +27,10 @@ const storage = multer.diskStorage({
 
 	// 将文件名进行修改, 为了避免上传文件时的名称冲突
 	filename: function (req, file, cb) {
+		// origin name utf8
+		file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8');
+
+		// new file name like 1662562964513-417990203.mp3
 		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
 		cb(null, uniqueSuffix + path.extname(file.originalname))
 	}
