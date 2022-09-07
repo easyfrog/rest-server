@@ -39,6 +39,13 @@ route.post('/api', async (req, res) => {
 })
 
 //
+// "cloud remote function"
+//
+route.post('/func', async (req, res) => {
+	await mongo.run_func(req, res)
+})
+
+//
 // 处理文件上传
 //
 route.post('/upload', upload.array('files', 20), (req, res) => {

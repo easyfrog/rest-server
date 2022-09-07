@@ -1,5 +1,6 @@
 var getCollection = require('./mongoConnection').getCollection
 var dbfunc = require('./dbfunc')
+var run_func = require('./run_func')
 
 // user collection is async Function
 var userColFunc = getCollection('user')
@@ -13,4 +14,5 @@ exports.insertOne = async data => {
 
 exports.getCollection = getCollection
 exports.dbfunc = dbfunc
+exports.run_func = run_func
 
