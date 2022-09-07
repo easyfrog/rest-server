@@ -124,50 +124,19 @@ volumes:
 在客户端, 使用这个库文件来访问 `api` 从客户端发送数据库操作代码并返回数据
 
 ```js
-import * as db from './lib/dbfunc.min'
+import func from 'run_func_client'
 
-// 设备数据度接口地址
-// dbfunc
-db.url = 'http://localhost:3000/api'
+// 初始化, 默认值: 'http://localhost:3002'
+func.init({server: ''})
 
-// update
-db.query((db, prom) => {
-    db.collection('user').update({date: 1659968157204}, {$set: {
-        name: 'hahahah'
-    }}, (err, res) => {
-        prom.resolve(res)
-    })
-}).then(res => {
-    console.log(res)
-})
+// 远程运行, 处理数据库(MongoDB)
+func.run(async db => {
+    var res = await db.collection('users').find({}, {projection: {_id: 0}).toArray()
+    return res
+}).then()
 
-// insert
-db.query([now], (db, prom) => {
-    db.collection('user')
-        .insertOne({
-            name: 'zqh',
-            age: 12,
-            date: param1
-        }, (err, res) => {
-            prom.resolve({})
-        })
-
-}).then(res => {
-    console.log(res)
-
-    // find
-    db.query((db, prom) => { 
-        db.collection('user')
-            .find({}, {projection: {_id: 0}})
-            .toArray((err, res) => {
-                prom.resolve(res)
-            })
-
-    }).then(_res => {
-        console.log('result: ', _res)
-    })
-
-})
+// 文件上传, 支持多文件上传, files: fileList.files
+func.upload(files).then()
 ```
 
 ### Linux 常用命
