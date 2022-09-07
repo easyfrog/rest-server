@@ -119,9 +119,9 @@ volumes:
     data:
 ```
 
-### 在客户端引用 `dbfunc.min.js`
+### 在客户端引用 `run_func_client.js`
 
-在客户端, 使用这个库文件来访问 `api` 从客户端发送数据库操作代码并返回数据
+在客户端, 使用这个库文件来进行与服务器之间的请求, 类似`severless`的客户端SDK, 可以操作数据库,处理文件上传等
 
 ```js
 import func from 'run_func_client'
@@ -129,7 +129,7 @@ import func from 'run_func_client'
 // 初始化, 默认值: 'http://localhost:3002'
 func.init({server: ''})
 
-// 远程运行, 处理数据库(MongoDB)
+// 服务端执行, 处理数据库(MongoDB)
 func.run(async db => {
     var res = await db.collection('users').find({}, {projection: {_id: 0}).toArray()
     return res
