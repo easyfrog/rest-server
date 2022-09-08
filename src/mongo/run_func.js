@@ -1,4 +1,5 @@
 var config = require('../../config')
+var queue = require('./queue')
 
 // AsyncFunction (is not a global object)
 const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
@@ -10,18 +11,18 @@ var getDB = require('./mongoConnection').getDB
  *
  * req: {
  * 		dbname:, 				// default is common
- * 		context:, 				// function中用到的变量上下文 Array
  * 		queue:, 				// string, 队列名称, 是否加入队列
- * 		funcion:, 				// function string
+ * 		params:, 				// function中用到的变量上下文 Array
+ * 		function:, 				// function string
  * }
  * 
  * @example
  * 
  * // front end
  * ajax({
- * 		url:'https://node.ooomap.com/commondb',
- * 		dbname: ,   											// 请求内容object
- * 		context:, 												// 上下文, 数组 Array
+ * 		url:'https://localhost:3002',
+ * 		queue: ,   												// 所在的队列
+ * 		params:, 												// 上下文, 数组 Array
  * 		function: '',											// 数据体
  * })
  */
@@ -35,9 +36,9 @@ async function run_func(req, res) {
 	var pre = '{';
 
 	// 将上下文数据转为字符串
-	if (body.context) {
+	if (body.params) {
 		var str = '';
-		body.context.forEach((c, i) => {
+		body.params.forEach((c, i) => {
 			str += 'var param' + (i + 1) + '=' + JSON.stringify(c) + ';';
 		})
 
@@ -52,20 +53,22 @@ async function run_func(req, res) {
 	// create the async function
 	var fun = new AsyncFunction('db', funBody);
 
-	var result 
+	// 如果需要加入队列	
+	if (body.queue) {
+		queue.appendQueue(body.queue, fun, db, res)
+	} else {
+		try{
 
-	try{
+			// invoke function
+			var result = await fun(db);
+			res.json(result)
 
-		// invoke function
-		result = await fun(db);
+		} catch(e) {
 
-	} catch(e) {
+			res.send(e.message)
 
-		result = e.message
-
+		}
 	}
-
-	res.json(result)
 
 }
 
