@@ -50,16 +50,22 @@ var startQueue = async name => {
 	}
 
 	// run function
-	var res = await funcObj()
-
+	try {
+		await funcObj()
+	} catch(e) {
+		console.error(e.message)
+	}
 
 	if (que.length) {
 		que.isRunning = false;
 		startQueue(name);
 	} else {
-		console.log('===> remove ', name, queue);
 		delete queue[name];
+		console.log('===>', name, 'complete, and removed');
 	}
 }
 
-exports.startQueue = startQueue
+
+
+
+

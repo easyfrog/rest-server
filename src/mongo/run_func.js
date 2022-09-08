@@ -21,9 +21,9 @@ var getDB = require('./mongoConnection').getDB
  * // front end
  * ajax({
  * 		url:'https://localhost:3002',
- * 		queue: ,   												// 所在的队列
- * 		params:, 												// 上下文, 数组 Array
- * 		function: '',											// 数据体
+ * 		queue: ,   							// 所在的队列
+ * 		params:, 							// 上下文, 数组 Array
+ * 		function: '',						// 函数体, function.toString()
  * })
  */
 async function run_func(req, res) {
@@ -58,18 +58,13 @@ async function run_func(req, res) {
 		queue.appendQueue(body.queue, fun, db, res)
 	} else {
 		try{
-
 			// invoke function
 			var result = await fun(db);
 			res.json(result)
-
 		} catch(e) {
-
 			res.send(e.message)
-
 		}
 	}
-
 }
 
 module.exports = run_func;
