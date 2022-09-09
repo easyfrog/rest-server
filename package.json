@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "pm2-runtime start index.js",
-    "pub_run_func": "cd src/mongo && npm publish"
+    "pub_run_func": "cp client/run_func_client.js src/mongo/run_func_client.js && cd src/mongo && npm publish && rm -rf ./run_func_client.js && cd ../../"
   },
   "keywords": [],
   "author": "",

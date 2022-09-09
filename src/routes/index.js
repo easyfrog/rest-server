@@ -1,5 +1,6 @@
 var express = require('express')
 var mongo = require('../mongo')
+var config = require('../../config')
 
 // for files upload
 var upload = require('../utils/multer')
@@ -14,7 +15,7 @@ route.get('/', (req, res) => {
 
 //
 // db func api
-// 可以前面直接写mongodb操作函数
+// 可以前面直接写mongodb操作函数及处理文件上传等
 //
 route.post('/api', async (req, res) => {
 	
@@ -41,6 +42,7 @@ route.post('/api', async (req, res) => {
 //
 // "cloud remote function"
 // client method is func.run(async db => {})
+// 可以在客户端编写mongodb操作函数到服务端执行以及处理文件上传等
 //
 route.post('/func', async (req, res) => {
 	await mongo.run_func(req, res)

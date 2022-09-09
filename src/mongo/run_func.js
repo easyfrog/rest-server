@@ -1,10 +1,21 @@
-var config = require('../../config')
 var queue = require('./queue')
 
 // AsyncFunction (is not a global object)
 const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
 
-var getDB = require('./mongoConnection').getDB
+var config = null
+
+/**
+ * config:
+ * 		db_name,
+ * 		getDB
+ */
+function init(_config) {
+	config = Object.assign({
+		db_name: 'base',
+		getDB: null 			// getDB function
+	}, _config)
+}
 
 /**
  * post request
@@ -28,10 +39,16 @@ var getDB = require('./mongoConnection').getDB
  */
 async function run_func(req, res) {
 
+	if (!config) {
+		console.warn('init first!')
+		res.json({msg: 'init first!'})
+		return
+	}
+
 	var body = req.body
 
 	// 先拿到 db 实例
-	var db = await getDB(body.dbname || config.db_name)
+	var db = await config.getDB(body.dbname || config.db_name)
 
 	var pre = '{';
 
@@ -67,7 +84,10 @@ async function run_func(req, res) {
 	}
 }
 
-module.exports = run_func;
+module.exports = {
+	init,
+	run_func
+};
 
 
 
