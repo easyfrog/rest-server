@@ -11,9 +11,6 @@ var config = null
  * 		getDB
  */
 function init(_config) {
-
-	console.log('run_func init:', _config)
-
 	config = Object.assign({
 		db_name: 'base',
 		getDB: null 			// getDB function
