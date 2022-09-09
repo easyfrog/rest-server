@@ -11,6 +11,9 @@ var config = null
  * 		getDB
  */
 function init(_config) {
+
+	console.log('run_func init:', _config)
+
 	config = Object.assign({
 		db_name: 'base',
 		getDB: null 			// getDB function
@@ -41,7 +44,7 @@ async function run_func(req, res) {
 
 	if (!config) {
 		console.warn('init first!')
-		res.json({msg: 'init first!'})
+		res.json({msg: 'server needs init run_func!'})
 		return
 	}
 

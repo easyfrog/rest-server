@@ -1,5 +1,9 @@
 var express = require('express')
-var mongo = require('../mongo')
+
+// 因为我们将run_func.js做为了一个独立的包发布在了
+// npmjs.com上, 所以mongo文件夹中有一个package.json文件
+// 设置了 main, 所以这里需要显示的引入 /mongo/index
+var mongo = require('../mongo/index')
 var config = require('../../config')
 
 // for files upload
