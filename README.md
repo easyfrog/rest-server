@@ -26,7 +26,7 @@ CMD npm start
 docker build -t rest-server_app .
 
 # run
-docker run -p -d 3000:3000 image-name
+docker run -d -p 3000:3000 image-name
 ```
 
 ## use `docker-compose` to manager multiple containers
