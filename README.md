@@ -119,6 +119,12 @@ volumes:
     data:
 ```
 
+### 查看docker占用的资源
+
+```bash
+docker stats
+```
+
 ### 在客户端引用 `run_func_client.js`
 
 在客户端, 使用这个库文件来进行与服务器之间的请求, 类似`severless`的客户端SDK, 可以操作数据库,处理文件上传等
