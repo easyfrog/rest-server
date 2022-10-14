@@ -119,13 +119,13 @@ volumes:
     data:
 ```
 
-### 查看docker占用的资源
+## 查看docker占用的资源
 
 ```bash
 docker stats
 ```
 
-### 在客户端引用 `run_func_client.js`
+## 在客户端引用 `run_func_client.js`
 
 在客户端, 使用这个库文件来进行与服务器之间的请求, 类似`severless`的客户端SDK, 可以操作数据库,处理文件上传等
 
@@ -145,7 +145,7 @@ func.run(async db => {
 func.upload(files).then()
 ```
 
-### Linux 常用命
+## Linux 常用命
 
 ```base
 # 查看端口号
@@ -157,4 +157,27 @@ kill -9 pid
 # centOS 启动 docker
 sudo systemctl start docker
 sudo systemctl stop docker
+```
+
+## 客户端连接websocket服务
+
+```javascript
+//
+// websocket
+//
+var ws = new WebSocket('ws://localhost:3002/ws')
+
+// receive
+ws.onmessage = function (ent) {
+    var receive = JSON.parse(ent.data)
+    console.log('websocket message', receive);
+}
+
+// send message
+function wsSend(str) {
+    ws.send(JSON.stringify({
+        type: 'msg',
+        message: str
+    }))
+}
 ```
