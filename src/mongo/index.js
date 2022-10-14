@@ -1,6 +1,5 @@
 var mc = require('./mongoConnection')
 var rf = require('./run_func')
-var dbfunc = require('./dbfunc')
 
 var config = require('../../config')
 
@@ -12,7 +11,6 @@ rf.init({
 })
 
 exports.getDB = mc.getDB
-exports.getCollection = mc.getCollection
-exports.dbfunc = dbfunc
 exports.run_func = rf.run_func
+exports.getCollection = mc.getCollection
 

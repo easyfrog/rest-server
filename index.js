@@ -5,9 +5,12 @@ var config = require('./config')
 var express = require('express')
 var app = express()
 
-var cors = require('cors')
+// express websocket
+var ws = require('./src/ws')
+ws(app)
 
-// use cors
+// use CORS
+var cors = require('cors')
 app.use(cors())
 
 // use json
